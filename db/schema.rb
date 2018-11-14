@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181026061604) do
+ActiveRecord::Schema.define(version: 20181112055921) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "comments", force: :cascade do |t|
+    t.string "commenter"
+    t.text "body"
+    t.bigint "my_blog_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["my_blog_id"], name: "index_comments_on_my_blog_id"
+  end
 
   create_table "my_blogs", force: :cascade do |t|
     t.string "title"
@@ -22,4 +31,5 @@ ActiveRecord::Schema.define(version: 20181026061604) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "comments", "my_blogs"
 end
